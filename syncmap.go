@@ -27,6 +27,9 @@ func (sm *SyncMap[K, V]) Delete(key K) {
 // The ok result indicates whether value was found in the map.
 func (sm *SyncMap[K, V]) Load(key K) (value V, ok bool) {
 	v, ok := sm.sm.Load(key)
+	if v == nil {
+		return
+	}
 	return v.(V), ok
 }
 
@@ -34,6 +37,9 @@ func (sm *SyncMap[K, V]) Load(key K) (value V, ok bool) {
 // The loaded result reports whether the key was present.
 func (sm *SyncMap[K, V]) LoadAndDelete(key K) (value V, loaded bool) {
 	v, ok := sm.sm.LoadAndDelete(key)
+	if v == nil {
+		return
+	}
 	return v.(V), ok
 }
 
@@ -42,6 +48,9 @@ func (sm *SyncMap[K, V]) LoadAndDelete(key K) (value V, loaded bool) {
 // The loaded result is true if the value was loaded, false if stored.
 func (sm *SyncMap[K, V]) LoadOrStore(key K, value V) (actual V, loaded bool) {
 	v, ok := sm.sm.LoadOrStore(key, value)
+	if v == nil {
+		return
+	}
 	return v.(V), ok
 }
 
@@ -76,5 +85,8 @@ func (sm *SyncMap[K, V]) Store(key K, value V) {
 // The loaded result reports whether the key was present.
 func (sm *SyncMap[K, V]) Swap(key K, value V) (previous V, loaded bool) {
 	v, ok := sm.sm.Swap(key, value)
+	if v == nil {
+		return
+	}
 	return v.(V), ok
 }
